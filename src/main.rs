@@ -28,11 +28,10 @@ async fn main() -> Result<()> {
 }
 
 fn print_urls(iterator: Iter<tweet::Tweet>) {
-    for status in iterator {
-        if let Some(entities) = &status.entities.media {
-            for item in entities {
-                println!("{}:orig", item.media_url_https);
-            }
-        }
-    }
+    iterator
+        .filter_map(|status| status.entities.media.as_ref())
+        .flatten()
+        .map(|x| &x.media_url_https)
+        .filter(|x| !x.contains("thumb"))
+        .for_each(|x| println!("{}:orig", x))
 }
