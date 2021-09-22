@@ -13,4 +13,4 @@ readme = "README.md"
 [dependencies]
 color-eyre = { version = "0.5.11", default-features = false }
 egg-mode = { version = "0.16", features = ["rustls_webpki"], default-features = false }
-tokio = { version = "1.11.0", features = ["rt-multi-thread", "macros"] }
+tokio = { version = "1.12.0", features = ["rt-multi-thread", "macros"] }
