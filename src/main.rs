@@ -25,9 +25,9 @@ struct CliOptions {
     #[structopt(long, env)]
     consumer_key: String,
 
-    /// The consumer secret for the project.
+    /// The consumer key secret for the project.
     #[structopt(long, env)]
-    consumer_secret: String,
+    consumer_key_secret: String,
 
     /// The access token for your user, for the project.
     #[structopt(long, env)]
@@ -42,7 +42,7 @@ struct CliOptions {
 async fn main() -> Result<()> {
     let options: CliOptions = CliOptions::from_args();
 
-    let consumer = KeyPair::new(options.consumer_key, options.consumer_secret);
+    let consumer = KeyPair::new(options.consumer_key, options.consumer_key_secret);
     let access = KeyPair::new(options.access_token, options.access_token_secret);
     let token = Access { consumer, access };
 
