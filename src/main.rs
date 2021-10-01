@@ -14,7 +14,7 @@ use structopt::StructOpt;
 )]
 struct CliOptions {
     /// The Twitter username of the account to fetch images from.
-    #[structopt(env)]
+    #[structopt(env = "TARGET_USERNAME")]
     username: String,
 
     /// The maximum amount of tweets to check for images.
