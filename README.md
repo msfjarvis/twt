@@ -1,6 +1,6 @@
 # twitter-images
 
-Fetches the last 1024 tweets of a given account, then prints original quality URLs for all image tweets. Useful for archiving image content from an art account without Twitter compression.
+Fetches the last tweets of a given account, then prints original quality URLs for all image tweets. Useful for archiving image content from an art account without Twitter compression.
 
 ## Usage
 
@@ -19,3 +19,4 @@ The tool is built to avoid interactive login and relies on the presence of a bun
 - `ACCESS_TOKEN` - Authentication access token for your user, for the project
 - `ACCESS_TOKEN_SECRET` - Access secret for your user
 - `TARGET_USERNAME` - The username of the account to fetch tweets from, such as `archillect`
+- `MAX_AMOUNT` - Optional, specifies the maximum amount of tweets to check (default is 1024).
