@@ -62,5 +62,5 @@ fn print_urls(iterator: Iter<tweet::Tweet>) {
         .flatten()
         .map(|x| &x.media_url_https)
         .filter(|x| !x.contains("thumb"))
-        .for_each(|x| println!("{}:orig", x))
+        .for_each(|x| println!("{}:orig|{}", x, x.split('/').last().unwrap_or_default()))
 }
