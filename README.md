@@ -1,4 +1,4 @@
-# twitter-images
+# twitter-images [![Check Rust code](https://github.com/msfjarvis/twitter-images/actions/workflows/test.yml/badge.svg)](https://github.com/msfjarvis/twitter-images/actions/workflows/test.yml)
 
 Fetches the last tweets of a given account, then prints original quality URLs for all image tweets. Useful for archiving image content from an art account without Twitter compression.
 
