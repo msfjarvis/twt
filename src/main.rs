@@ -22,19 +22,19 @@ struct CliOptions {
     max_amount: i32,
 
     /// The consumer API key for the project.
-    #[structopt(long, env)]
+    #[structopt(long, env, default_value = std::option_env!("CONSUMER_KEY").unwrap_or(""))]
     consumer_key: String,
 
     /// The consumer key secret for the project.
-    #[structopt(long, env)]
+    #[structopt(long, env, default_value = std::option_env!("CONSUMER_KEY_SECRET").unwrap_or(""))]
     consumer_key_secret: String,
 
     /// The access token for your user, for the project.
-    #[structopt(long, env)]
+    #[structopt(long, env, default_value = std::option_env!("ACCESS_TOKEN").unwrap_or(""))]
     access_token: String,
 
     /// The access token secret for your user.
-    #[structopt(long, env)]
+    #[structopt(long, env, default_value = std::option_env!("ACCESS_TOKEN_SECRET").unwrap_or(""))]
     access_token_secret: String,
 }
 
