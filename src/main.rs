@@ -57,10 +57,14 @@ async fn main() -> Result<()> {
 }
 
 fn print_urls(iterator: Iter<tweet::Tweet>) {
-    iterator
-        .filter_map(|status| status.entities.media.as_ref())
-        .flatten()
+    let mut urls = iterator
+        .filter_map(|status| status.extended_entities.as_ref())
+        .flat_map(|entities| &entities.media)
         .map(|x| &x.media_url_https)
         .filter(|x| !x.contains("thumb"))
-        .for_each(|x| println!("{}:orig", x))
+        .collect::<Vec<&String>>();
+    urls.dedup();
+    for url in urls {
+        println!("{}:orig", url);
+    }
 }
