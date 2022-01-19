@@ -14,4 +14,4 @@ readme = "README.md"
 color-eyre = { version = "0.6.0", default-features = false }
 egg-mode = { version = "0.16.0", features = ["rustls_webpki"], default-features = false }
 tokio = { version = "1.15.0", features = ["rt-multi-thread", "macros"] }
-structopt = "0.3.25"
+structopt = "0.3.26"
