@@ -9,6 +9,7 @@ repository = "https://github.com/msfjarvis/twitter-images"
 homepage = "https://github.com/msfjarvis/twitter-images"
 keywords = ["twitter", "images"]
 readme = "README.md"
+include = ["src/main.rs", "LICENSE-*", "README.md"]
 
 [dependencies]
 color-eyre = { version = "0.6.0", default-features = false }
