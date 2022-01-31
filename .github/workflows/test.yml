@@ -2,12 +2,13 @@ on:
   push:
     branches:
       - main
+      - renovate/**
     paths-ignore:
       - README.md
   pull_request:
     paths-ignore:
       - README.md
-
+ 
 name: Check Rust code
 jobs:
   check:
