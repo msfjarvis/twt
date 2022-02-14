@@ -56,7 +56,7 @@ async fn main() -> Result<()> {
     Ok(())
 }
 
-fn print_urls(iterator: Iter<tweet::Tweet>) {
+fn print_urls(iterator: Iter<'_, tweet::Tweet>) {
     let mut urls = iterator
         .filter_map(|status| status.extended_entities.as_ref())
         .flat_map(|entities| &entities.media)
