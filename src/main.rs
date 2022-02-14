@@ -65,6 +65,6 @@ fn print_urls(iterator: Iter<tweet::Tweet>) {
         .collect::<Vec<&String>>();
     urls.dedup();
     for url in urls {
-        println!("{}:orig", url);
+        println!("{url}:orig");
     }
 }
