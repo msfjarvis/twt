@@ -14,5 +14,5 @@ include = ["src/main.rs", "LICENSE-*", "README.md"]
 [dependencies]
 color-eyre = { version = "0.6.0", default-features = false }
 egg-mode = { version = "0.16.0", features = ["rustls_webpki"], default-features = false }
-tokio = { version = "1.16.1", features = ["rt-multi-thread", "macros"] }
+tokio = { version = "1.17.0", features = ["rt-multi-thread", "macros"] }
 structopt = "0.3.26"
