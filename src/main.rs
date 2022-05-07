@@ -35,6 +35,12 @@ struct CliOptions {
     /// The access token secret for your user.
     #[clap(long, env, default_value = std::option_env!("ACCESS_TOKEN_SECRET").unwrap_or(""))]
     access_token_secret: String,
+
+    #[clap(long, default_value_t = false, parse(try_from_str))]
+    with_rts: bool,
+
+    #[clap(long, default_value_t = false, parse(try_from_str))]
+    with_replies: bool,
 }
 
 #[tokio::main]
@@ -47,8 +53,8 @@ async fn main() -> Result<()> {
 
     let user_id: UserID = options.username.into();
 
-    let timeline =
-        tweet::user_timeline(user_id, false, false, &token).with_page_size(options.max_amount);
+    let timeline = tweet::user_timeline(user_id, options.with_replies, options.with_rts, &token)
+        .with_page_size(options.max_amount);
     let (_, feed) = timeline.start().await?;
     print_urls(feed.iter());
 
