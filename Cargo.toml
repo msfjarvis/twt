@@ -15,4 +15,4 @@ include = ["src/main.rs", "LICENSE-*", "README.md"]
 clap = { version = "3.1.18", features = ["derive", "env"] }
 color-eyre = { version = "0.6.1", default-features = false }
 egg-mode = { version = "0.16.0", features = ["rustls_webpki"], default-features = false }
-tokio = { version = "1.19.0", features = ["rt-multi-thread", "macros"] }
+tokio = { version = "1.19.1", features = ["rt-multi-thread", "macros"] }
