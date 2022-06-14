@@ -7,6 +7,13 @@
       "matchPackagePatterns": ["*"],
       "automerge": true,
       "automergeType": "branch"
+    },
+    {
+      "managers": ["cargo"],
+      "packagePatterns": [
+        "^clap",
+      ],
+      "enabled": false
     }
   ]
 }
