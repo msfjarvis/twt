@@ -56,12 +56,13 @@ async fn main() -> Result<()> {
     let timeline = tweet::user_timeline(user_id, options.with_replies, options.with_rts, &token)
         .with_page_size(options.max_amount);
     let (_, feed) = timeline.start().await?;
-    print_urls(feed.iter());
+    print_embedded_urls(feed.iter());
+    print_media_urls(feed.iter());
 
     Ok(())
 }
 
-fn print_urls(iterator: Iter<'_, tweet::Tweet>) {
+fn print_media_urls(iterator: Iter<'_, tweet::Tweet>) {
     let mut urls = iterator
         .filter_map(|status| status.extended_entities.as_ref())
         .flat_map(|entities| &entities.media)
@@ -71,5 +72,18 @@ fn print_urls(iterator: Iter<'_, tweet::Tweet>) {
     urls.dedup();
     for url in urls {
         println!("{url}:orig");
+    }
+}
+
+fn print_embedded_urls(iterator: Iter<'_, tweet::Tweet>) {
+    let mut urls = iterator
+        .map(|status| &status.entities)
+        .map(|entities| &entities.urls)
+        .flatten()
+        .filter_map(|url| url.expanded_url.as_ref())
+        .collect::<Vec<&String>>();
+    urls.dedup();
+    for url in urls {
+        println!("{url}");
     }
 }
