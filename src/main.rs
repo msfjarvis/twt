@@ -6,6 +6,10 @@ use egg_mode::tweet;
 use egg_mode::user::UserID;
 use egg_mode::KeyPair;
 use egg_mode::Token::Access;
+use mime::Mime;
+use url::Url;
+
+const ACCEPTED_MIME_TYPES: [Mime; 2] = [mime::IMAGE_JPEG, mime::IMAGE_PNG];
 
 #[derive(Parser)]
 #[clap(author, version, about)]
@@ -81,9 +85,18 @@ fn print_embedded_urls(iterator: Iter<'_, tweet::Tweet>) {
         .map(|entities| &entities.urls)
         .flatten()
         .filter_map(|url| url.expanded_url.as_ref())
-        .collect::<Vec<&String>>();
+        .flat_map(|url| Url::parse(url))
+        .collect::<Vec<Url>>();
     urls.dedup();
     for url in urls {
-        println!("{url}");
+        if let Some(segment) = url.path().split("/").last() {
+            let guess = mime_guess::from_path(segment);
+            if let Some(_) = guess
+                .first()
+                .filter(|mime| ACCEPTED_MIME_TYPES.contains(mime))
+            {
+                println!("{url}");
+            }
+        };
     }
 }
