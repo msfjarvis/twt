@@ -12,7 +12,7 @@ readme = "README.md"
 include = ["src/main.rs", "LICENSE-*", "README.md"]
 
 [dependencies]
-clap = { version = "3.2.6", features = [ "color", "derive", "env" ] }
+clap = { version = "3.2.6", features = [ "color", "deprecated", "derive", "env" ] }
 color-eyre = { version = "0.6.1", default-features = false }
 egg-mode = { version = "0.16.0", features = ["rustls_webpki"], default-features = false }
 mime = "0.3"

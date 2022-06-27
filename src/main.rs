@@ -40,10 +40,10 @@ struct CliOptions {
     #[clap(long, env, default_value = std::option_env!("ACCESS_TOKEN_SECRET").unwrap_or(""))]
     access_token_secret: String,
 
-    #[clap(long, default_value_t = false, parse(try_from_str))]
+    #[clap(long, default_value_t = false, value_parser = clap::value_parser!(bool))]
     with_rts: bool,
 
-    #[clap(long, default_value_t = false, parse(try_from_str))]
+    #[clap(long, default_value_t = false, value_parser = clap::value_parser!(bool))]
     with_replies: bool,
 }
 
