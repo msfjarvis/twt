@@ -82,18 +82,18 @@ fn print_media_urls(iterator: Iter<'_, tweet::Tweet>) {
 fn print_embedded_urls(iterator: Iter<'_, tweet::Tweet>) {
     let mut urls = iterator
         .map(|status| &status.entities)
-        .map(|entities| &entities.urls)
-        .flatten()
+        .flat_map(|entities| &entities.urls)
         .filter_map(|url| url.expanded_url.as_ref())
         .flat_map(|url| Url::parse(url))
         .collect::<Vec<Url>>();
     urls.dedup();
     for url in urls {
-        if let Some(segment) = url.path().split("/").last() {
+        if let Some(segment) = url.path().split('/').last() {
             let guess = mime_guess::from_path(segment);
-            if let Some(_) = guess
+            if guess
                 .first()
                 .filter(|mime| ACCEPTED_MIME_TYPES.contains(mime))
+                .is_some()
             {
                 println!("{url}");
             }
