@@ -43,9 +43,11 @@ struct Images {
     #[clap(long, default_value = "1024")]
     max_amount: i32,
 
+    /// Include retweets.
     #[clap(long, default_value_t = false, value_parser = clap::value_parser!(bool))]
     with_rts: bool,
 
+    /// Include replies.
     #[clap(long, default_value_t = false, value_parser = clap::value_parser!(bool))]
     with_replies: bool,
 }
@@ -64,9 +66,11 @@ struct Links {
     #[clap(long, default_value = "1024")]
     max_amount: i32,
 
+    /// Include retweets.
     #[clap(long, default_value_t = false, value_parser = clap::value_parser!(bool))]
     with_rts: bool,
 
+    /// Include replies.
     #[clap(long, default_value_t = false, value_parser = clap::value_parser!(bool))]
     with_replies: bool,
 }
