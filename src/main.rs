@@ -1,6 +1,6 @@
 use std::slice::Iter;
 
-use clap::{AppSettings, Parser};
+use clap::{AppSettings, Args, Parser, Subcommand};
 use color_eyre::Result;
 use egg_mode::tweet;
 use egg_mode::user::UserID;
@@ -20,8 +20,20 @@ const ACCEPTED_MIME_TYPES: [Mime; 2] = [mime::IMAGE_JPEG, mime::IMAGE_PNG];
 #[clap(global_setting(AppSettings::DeriveDisplayOrder))]
 /// Fetches the last tweets of a given account, then prints original quality URLs for all image tweets.
 struct CliOptions {
+    #[clap(subcommand)]
+    command: Commands,
+}
+
+#[derive(Debug, Subcommand)]
+enum Commands {
+    #[clap(arg_required_else_help = true)]
+    Images(Images),
+}
+
+#[derive(Debug, Args)]
+struct Images {
     /// The Twitter username of the account to fetch images from.
-    #[clap(env = "TARGET_USERNAME")]
+    #[clap(long)]
     username: String,
 
     /// The maximum amount of tweets to check for images.
@@ -43,13 +55,17 @@ async fn main() -> Result<()> {
     let access = KeyPair::new(ACCESS_TOKEN, ACCESS_TOKEN_SECRET);
     let token = Access { consumer, access };
 
-    let user_id: UserID = options.username.into();
+    match options.command {
+        Commands::Images(opts) => {
+            let user_id: UserID = opts.username.into();
 
-    let timeline = tweet::user_timeline(user_id, options.with_replies, options.with_rts, &token)
-        .with_page_size(options.max_amount);
-    let (_, feed) = timeline.start().await?;
-    print_embedded_urls(feed.iter());
-    print_media_urls(feed.iter());
+            let timeline = tweet::user_timeline(user_id, opts.with_replies, opts.with_rts, &token)
+                .with_page_size(opts.max_amount);
+            let (_, feed) = timeline.start().await?;
+            print_embedded_urls(feed.iter());
+            print_media_urls(feed.iter());
+        }
+    }
 
     Ok(())
 }
