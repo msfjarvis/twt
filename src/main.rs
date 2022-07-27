@@ -111,11 +111,8 @@ async fn main() -> Result<()> {
                 .with_page_size(opts.max_amount);
             let (_, feed) = timeline.start().await?;
             let filter = |url: &Url| {
-                return if let Some(host) = url.host() {
-                    match host {
-                        Host::Domain(h) => opts.host == h,
-                        _ => false,
-                    }
+                return if let Some(Host::Domain(h)) = url.host() {
+                    opts.host == h
                 } else {
                     false
                 };
@@ -144,15 +141,11 @@ fn print_embedded_urls<F>(iterator: Iter<'_, tweet::Tweet>, filter: F)
 where
     F: FnMut(&Url) -> bool,
 {
-    let mut urls = iterator
+    iterator
         .map(|status| &status.entities)
         .flat_map(|entities| &entities.urls)
         .filter_map(|url| url.expanded_url.as_ref())
         .flat_map(|url| Url::parse(url))
         .filter(filter)
-        .collect::<Vec<Url>>();
-    urls.dedup();
-    for url in urls {
-        println!("{url}")
-    }
+        .for_each(|url| println!("{url}"));
 }
