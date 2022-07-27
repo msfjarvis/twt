@@ -7,7 +7,7 @@ use egg_mode::user::UserID;
 use egg_mode::KeyPair;
 use egg_mode::Token::Access;
 use mime::Mime;
-use url::Url;
+use url::{Host, Url};
 
 const CONSUMER_KEY: &str = std::env!("CONSUMER_KEY");
 const CONSUMER_KEY_SECRET: &str = std::env!("CONSUMER_KEY_SECRET");
@@ -28,6 +28,8 @@ struct CliOptions {
 enum Commands {
     #[clap(arg_required_else_help = true)]
     Images(Images),
+    #[clap(arg_required_else_help = true)]
+    Links(Links),
 }
 
 #[derive(Debug, Args)]
@@ -36,6 +38,27 @@ struct Images {
     /// The Twitter username of the account to fetch images from.
     #[clap(long)]
     username: String,
+
+    /// The maximum amount of tweets to check for images.
+    #[clap(long, default_value = "1024")]
+    max_amount: i32,
+
+    #[clap(long, default_value_t = false, value_parser = clap::value_parser!(bool))]
+    with_rts: bool,
+
+    #[clap(long, default_value_t = false, value_parser = clap::value_parser!(bool))]
+    with_replies: bool,
+}
+
+#[derive(Debug, Args)]
+struct Links {
+    /// The Twitter username of the account to fetch links from.
+    #[clap(long)]
+    username: String,
+
+    /// The host name to filter links on.
+    #[clap(long, default_value = "imgur.com")]
+    host: String,
 
     /// The maximum amount of tweets to check for images.
     #[clap(long, default_value = "1024")]
@@ -76,6 +99,24 @@ async fn main() -> Result<()> {
             };
             print_embedded_urls(feed.iter(), filter);
             print_media_urls(feed.iter());
+        }
+        Commands::Links(opts) => {
+            let user_id: UserID = opts.username.into();
+
+            let timeline = tweet::user_timeline(user_id, opts.with_replies, opts.with_rts, &token)
+                .with_page_size(opts.max_amount);
+            let (_, feed) = timeline.start().await?;
+            let filter = |url: &Url| {
+                return if let Some(host) = url.host() {
+                    match host {
+                        Host::Domain(h) => opts.host == h,
+                        _ => false,
+                    }
+                } else {
+                    false
+                };
+            };
+            print_embedded_urls(feed.iter(), filter);
         }
     }
 
