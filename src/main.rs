@@ -31,6 +31,7 @@ enum Commands {
 }
 
 #[derive(Debug, Args)]
+/// Fetch original quality images from the tweets of a given Twitter user
 struct Images {
     /// The Twitter username of the account to fetch images from.
     #[clap(long)]

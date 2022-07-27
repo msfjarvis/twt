@@ -1,12 +1,12 @@
 [package]
-name = "twitter-images"
+name = "twt"
 version = "0.3.0"
 edition = "2021"
 authors = ["Harsh Shandilya <me@msfjarvis.dev>"]
 license = "MIT/Apache-2.0"
-description = "Fetch original quality images from the tweets of a given Twitter user"
-repository = "https://github.com/msfjarvis/twitter-images"
-homepage = "https://github.com/msfjarvis/twitter-images"
+description = "Tools for extracting metadata from tweets"
+repository = "https://github.com/msfjarvis/twt"
+homepage = "https://github.com/msfjarvis/twt"
 keywords = ["twitter", "images"]
 readme = "README.md"
 publish = false
