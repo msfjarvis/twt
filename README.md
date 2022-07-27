@@ -1,6 +1,6 @@
-# twitter-images [![Check Rust code](https://github.com/msfjarvis/twitter-images/actions/workflows/test.yml/badge.svg)](https://github.com/msfjarvis/twitter-images/actions/workflows/test.yml)
+# twt [![Check Rust code](https://github.com/msfjarvis/twitter-images/actions/workflows/test.yml/badge.svg)](https://github.com/msfjarvis/twitter-images/actions/workflows/test.yml)
 
-Fetches the last tweets of a given account, then prints original quality URLs for all image tweets. Useful for archiving image content from an art account without Twitter compression.
+CLI tool to extract metadata from tweets
 
 ## Usage
 
@@ -12,31 +12,31 @@ cd twitter-images
 cargo build --release
 ```
 
-The tool is built to avoid interactive login and relies on the presence of a bunch of environment variables/named arguments that require a Twitter developer account and a project created on the account to obtain.
+The tool is built to avoid interactive login and relies on the presence of a bunch of environment variables at build-time that require a Twitter developer account and a project created on the account to obtain.
 
-- `CONSUMER_KEY` - The consumer API key for the project (`--consumer-secret`).
-- `CONSUMER_KEY_SECRET` - The consumer secret for the project (`--consumer-key-secret`).
-- `ACCESS_TOKEN` - Authentication access token for your user, for the project (`--access-token`).
-- `ACCESS_TOKEN_SECRET` - Access secret for your user (`--access-token-secret`).
+- `CONSUMER_KEY` - The consumer API key for the project.
+- `CONSUMER_KEY_SECRET` - The consumer secret for the project.
+- `ACCESS_TOKEN` - Authentication access token for your user, for the project.
+- `ACCESS_TOKEN_SECRET` - Access secret for your user.
 
 ## Examples
 
-- **Basic Usage**
+- **Get image links**
 
     ```sh
-    twitter-images archillect
+    twt images --username archillect
     ```
 
 - **Set the maximum tweets to check**
 
     ```sh
-    twitter-images archillect --max-amount 512
+    twt images --username archillect --max-amount 512
     ```
 
-- **Full Options**
+- **Get all links**
 
     ```sh
-    twitter-images archillect --access-token <access-token> --access-token-secret <access-token-secret> --consumer-key <consumer-key> --consumer-key-secret <consumer-key-secret>
+    twt links --username AITA_online --host bit.ly
     ```
 
-For more help run: `twitter-images -h`.
+For more help run: `twt -h`.
