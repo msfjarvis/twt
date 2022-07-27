@@ -63,11 +63,6 @@ jobs:
       with:
         toolchain: stable
 
-    - name: Install cargo-nextest
-      uses: baptiste0928/cargo-install@bf6758885262d0e6f61089a9d8c8790d3ac3368f # tag=v1
-      with:
-        crate: cargo-nextest
-
     - name: Install cargo-deny
       uses: baptiste0928/cargo-install@bf6758885262d0e6f61089a9d8c8790d3ac3368f # tag=v1
       with:
@@ -91,7 +86,3 @@ jobs:
     - name: Clippy
       shell: bash
       run: cargo clippy -- -Wclippy::pedantic
-
-    - name: Run tests
-      shell: bash
-      run: cargo nextest run --all-features
