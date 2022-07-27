@@ -63,7 +63,18 @@ async fn main() -> Result<()> {
             let timeline = tweet::user_timeline(user_id, opts.with_replies, opts.with_rts, &token)
                 .with_page_size(opts.max_amount);
             let (_, feed) = timeline.start().await?;
-            print_embedded_urls(feed.iter());
+            let filter = |url: &Url| {
+                return if let Some(segment) = url.path().split('/').last() {
+                    let guess = mime_guess::from_path(segment);
+                    guess
+                        .first()
+                        .filter(|mime| ACCEPTED_MIME_TYPES.contains(mime))
+                        .is_some()
+                } else {
+                    false
+                };
+            };
+            print_embedded_urls(feed.iter(), filter);
             print_media_urls(feed.iter());
         }
     }
@@ -84,24 +95,19 @@ fn print_media_urls(iterator: Iter<'_, tweet::Tweet>) {
     }
 }
 
-fn print_embedded_urls(iterator: Iter<'_, tweet::Tweet>) {
+fn print_embedded_urls<F>(iterator: Iter<'_, tweet::Tweet>, filter: F)
+where
+    F: FnMut(&Url) -> bool,
+{
     let mut urls = iterator
         .map(|status| &status.entities)
         .flat_map(|entities| &entities.urls)
         .filter_map(|url| url.expanded_url.as_ref())
         .flat_map(|url| Url::parse(url))
+        .filter(filter)
         .collect::<Vec<Url>>();
     urls.dedup();
     for url in urls {
-        if let Some(segment) = url.path().split('/').last() {
-            let guess = mime_guess::from_path(segment);
-            if guess
-                .first()
-                .filter(|mime| ACCEPTED_MIME_TYPES.contains(mime))
-                .is_some()
-            {
-                println!("{url}");
-            }
-        };
+        println!("{url}")
     }
 }
