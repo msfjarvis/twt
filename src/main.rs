@@ -9,6 +9,10 @@ use egg_mode::Token::Access;
 use mime::Mime;
 use url::Url;
 
+const CONSUMER_KEY: &str = std::env!("CONSUMER_KEY");
+const CONSUMER_KEY_SECRET: &str = std::env!("CONSUMER_KEY_SECRET");
+const ACCESS_TOKEN: &str = std::env!("ACCESS_TOKEN");
+const ACCESS_TOKEN_SECRET: &str = std::env!("ACCESS_TOKEN_SECRET");
 const ACCEPTED_MIME_TYPES: [Mime; 2] = [mime::IMAGE_JPEG, mime::IMAGE_PNG];
 
 #[derive(Parser)]
@@ -24,22 +28,6 @@ struct CliOptions {
     #[clap(long, default_value = "1024")]
     max_amount: i32,
 
-    /// The consumer API key for the project.
-    #[clap(long, env, default_value = std::option_env!("CONSUMER_KEY").unwrap_or(""))]
-    consumer_key: String,
-
-    /// The consumer key secret for the project.
-    #[clap(long, env, default_value = std::option_env!("CONSUMER_KEY_SECRET").unwrap_or(""))]
-    consumer_key_secret: String,
-
-    /// The access token for your user, for the project.
-    #[clap(long, env, default_value = std::option_env!("ACCESS_TOKEN").unwrap_or(""))]
-    access_token: String,
-
-    /// The access token secret for your user.
-    #[clap(long, env, default_value = std::option_env!("ACCESS_TOKEN_SECRET").unwrap_or(""))]
-    access_token_secret: String,
-
     #[clap(long, default_value_t = false, value_parser = clap::value_parser!(bool))]
     with_rts: bool,
 
@@ -51,8 +39,8 @@ struct CliOptions {
 async fn main() -> Result<()> {
     let options = CliOptions::parse();
 
-    let consumer = KeyPair::new(options.consumer_key, options.consumer_key_secret);
-    let access = KeyPair::new(options.access_token, options.access_token_secret);
+    let consumer = KeyPair::new(CONSUMER_KEY, CONSUMER_KEY_SECRET);
+    let access = KeyPair::new(ACCESS_TOKEN, ACCESS_TOKEN_SECRET);
     let token = Access { consumer, access };
 
     let user_id: UserID = options.username.into();
