@@ -2,10 +2,10 @@ use std::slice::Iter;
 
 use clap::{AppSettings, Args, Parser, Subcommand};
 use color_eyre::Result;
-use egg_mode::tweet;
 use egg_mode::user::UserID;
 use egg_mode::KeyPair;
 use egg_mode::Token::Access;
+use egg_mode::{entities::VideoVariant, tweet};
 use mime::Mime;
 use url::{Host, Url};
 
@@ -30,6 +30,8 @@ enum Commands {
     Images(Images),
     #[clap(arg_required_else_help = true)]
     Links(Links),
+    #[clap(arg_required_else_help = true)]
+    Videos(Videos),
 }
 
 #[derive(Debug, Args)]
@@ -54,6 +56,29 @@ struct Images {
 
 #[derive(Debug, Args)]
 struct Links {
+    /// The Twitter username of the account to fetch links from.
+    #[clap(long)]
+    username: String,
+
+    /// The host name to filter links on.
+    #[clap(long, default_value = "imgur.com")]
+    host: String,
+
+    /// The maximum amount of tweets to check for images.
+    #[clap(long, default_value = "1024")]
+    max_amount: i32,
+
+    /// Include retweets.
+    #[clap(long, default_value_t = false, value_parser = clap::value_parser!(bool))]
+    with_rts: bool,
+
+    /// Include replies.
+    #[clap(long, default_value_t = false, value_parser = clap::value_parser!(bool))]
+    with_replies: bool,
+}
+
+#[derive(Debug, Args)]
+struct Videos {
     /// The Twitter username of the account to fetch links from.
     #[clap(long)]
     username: String,
@@ -118,10 +143,50 @@ async fn main() -> Result<()> {
                 };
             };
             print_embedded_urls(feed.iter(), filter);
+            print_video_urls(feed.iter());
+        }
+        Commands::Videos(opts) => {
+            let user_id: UserID = opts.username.into();
+
+            let timeline = tweet::user_timeline(user_id, opts.with_replies, opts.with_rts, &token)
+                .with_page_size(opts.max_amount);
+            let (_, feed) = timeline.start().await?;
+            print_video_urls(feed.iter());
         }
     }
 
     Ok(())
+}
+
+// It'd be significantly easier to just use [Vec::sort_by] but lol, lmao.
+// (It's actually because we don't have a mutable reference to the Vec).
+fn find_largest_video(videos: &Vec<VideoVariant>) -> &VideoVariant {
+    let mut largest = None;
+    for video in videos {
+        if let Some(bitrate) = video.bitrate {
+            if largest.is_none() {
+                largest = Some(video);
+            } else if bitrate > largest.unwrap().bitrate.unwrap() {
+                largest = Some(video);
+            }
+        }
+    }
+    return largest.unwrap();
+}
+
+fn print_video_urls(iterator: Iter<'_, tweet::Tweet>) {
+    iterator
+        .filter_map(|status| status.extended_entities.as_ref())
+        .flat_map(|entities| &entities.media)
+        .flat_map(|x| &x.video_info)
+        .map(|x| &x.variants)
+        .flat_map(|variants| {
+            if variants.is_empty() {
+                return None;
+            }
+            return Some(find_largest_video(variants));
+        })
+        .for_each(|x| println!("{}", x.url));
 }
 
 fn print_media_urls(iterator: Iter<'_, tweet::Tweet>) {
