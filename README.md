@@ -27,6 +27,12 @@ The tool is built to avoid interactive login and relies on the presence of a bun
     twt images --username archillect
     ```
 
+- **Get video links**
+
+    ```sh
+    twt videos --username imgur
+    ```
+
 - **Set the maximum tweets to check**
 
     ```sh
