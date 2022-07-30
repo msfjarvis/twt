@@ -180,12 +180,8 @@ fn print_video_urls(iterator: Iter<'_, tweet::Tweet>) {
         .flat_map(|entities| &entities.media)
         .flat_map(|x| &x.video_info)
         .map(|x| &x.variants)
-        .filter_map(|variants| {
-            if variants.is_empty() {
-                return None;
-            }
-            return Some(find_largest_video(variants));
-        })
+        .filter(|variants| !variants.is_empty())
+        .map(find_largest_video)
         .for_each(|x| println!("{}", x.url));
 }
 
