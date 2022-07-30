@@ -13,7 +13,7 @@ publish = false
 include = ["src/main.rs", "LICENSE-*", "README.md"]
 
 [dependencies]
-clap = { version = "3.2.15", features = [ "color", "deprecated", "derive", "env" ] }
+clap = { version = "3.2.16", features = [ "color", "deprecated", "derive", "env" ] }
 color-eyre = { version = "0.6.2", default-features = false }
 egg-mode = { version = "0.16.0", features = ["rustls_webpki"], default-features = false }
 mime = "0.3"
