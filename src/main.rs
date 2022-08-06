@@ -1,12 +1,14 @@
-use std::slice::Iter;
+mod cli;
 
-use clap::{AppSettings, Args, Parser, Subcommand};
+use crate::cli::{CliOptions, Commands};
+use clap::Parser;
 use color_eyre::Result;
 use egg_mode::user::UserID;
 use egg_mode::KeyPair;
 use egg_mode::Token::Access;
 use egg_mode::{entities::VideoVariant, tweet};
 use mime::Mime;
+use std::slice::Iter;
 use url::{Host, Url};
 
 const CONSUMER_KEY: &str = std::env!("CONSUMER_KEY");
@@ -14,91 +16,6 @@ const CONSUMER_KEY_SECRET: &str = std::env!("CONSUMER_KEY_SECRET");
 const ACCESS_TOKEN: &str = std::env!("ACCESS_TOKEN");
 const ACCESS_TOKEN_SECRET: &str = std::env!("ACCESS_TOKEN_SECRET");
 const ACCEPTED_MIME_TYPES: [Mime; 2] = [mime::IMAGE_JPEG, mime::IMAGE_PNG];
-
-#[derive(Parser)]
-#[clap(author, version, about)]
-#[clap(global_setting(AppSettings::DeriveDisplayOrder))]
-/// Fetches the last tweets of a given account, then prints original quality URLs for all image tweets.
-struct CliOptions {
-    #[clap(subcommand)]
-    command: Commands,
-}
-
-#[derive(Debug, Subcommand)]
-enum Commands {
-    #[clap(arg_required_else_help = true)]
-    Images(Images),
-    #[clap(arg_required_else_help = true)]
-    Links(Links),
-    #[clap(arg_required_else_help = true)]
-    Videos(Videos),
-}
-
-#[derive(Debug, Args)]
-/// Fetch original quality images from the tweets of a given Twitter user
-struct Images {
-    /// The Twitter username of the account to fetch images from.
-    #[clap(long)]
-    username: String,
-
-    /// The maximum amount of tweets to check for images.
-    #[clap(long, default_value = "1024")]
-    max_amount: i32,
-
-    /// Include retweets.
-    #[clap(long, default_value_t = false, value_parser = clap::value_parser!(bool))]
-    with_rts: bool,
-
-    /// Include replies.
-    #[clap(long, default_value_t = false, value_parser = clap::value_parser!(bool))]
-    with_replies: bool,
-}
-
-#[derive(Debug, Args)]
-struct Links {
-    /// The Twitter username of the account to fetch links from.
-    #[clap(long)]
-    username: String,
-
-    /// The host name to filter links on.
-    #[clap(long, default_value = "imgur.com")]
-    host: String,
-
-    /// The maximum amount of tweets to check for images.
-    #[clap(long, default_value = "1024")]
-    max_amount: i32,
-
-    /// Include retweets.
-    #[clap(long, default_value_t = false, value_parser = clap::value_parser!(bool))]
-    with_rts: bool,
-
-    /// Include replies.
-    #[clap(long, default_value_t = false, value_parser = clap::value_parser!(bool))]
-    with_replies: bool,
-}
-
-#[derive(Debug, Args)]
-struct Videos {
-    /// The Twitter username of the account to fetch links from.
-    #[clap(long)]
-    username: String,
-
-    /// The host name to filter links on.
-    #[clap(long, default_value = "imgur.com")]
-    host: String,
-
-    /// The maximum amount of tweets to check for images.
-    #[clap(long, default_value = "1024")]
-    max_amount: i32,
-
-    /// Include retweets.
-    #[clap(long, default_value_t = false, value_parser = clap::value_parser!(bool))]
-    with_rts: bool,
-
-    /// Include replies.
-    #[clap(long, default_value_t = false, value_parser = clap::value_parser!(bool))]
-    with_replies: bool,
-}
 
 #[tokio::main]
 async fn main() -> Result<()> {
