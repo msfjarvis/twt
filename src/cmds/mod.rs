@@ -1,4 +1,5 @@
 pub mod images;
+pub mod videos;
 
 use egg_mode::tweet::Tweet;
 use std::slice::Iter;
