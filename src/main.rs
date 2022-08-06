@@ -1,13 +1,14 @@
 mod cli;
+mod cmds;
 
 use crate::cli::{CliOptions, Commands};
+use crate::cmds::images;
 use clap::Parser;
 use color_eyre::Result;
 use egg_mode::user::UserID;
 use egg_mode::KeyPair;
 use egg_mode::Token::Access;
 use egg_mode::{entities::VideoVariant, tweet};
-use mime::Mime;
 use std::slice::Iter;
 use url::{Host, Url};
 
@@ -15,7 +16,6 @@ const CONSUMER_KEY: &str = std::env!("CONSUMER_KEY");
 const CONSUMER_KEY_SECRET: &str = std::env!("CONSUMER_KEY_SECRET");
 const ACCESS_TOKEN: &str = std::env!("ACCESS_TOKEN");
 const ACCESS_TOKEN_SECRET: &str = std::env!("ACCESS_TOKEN_SECRET");
-const ACCEPTED_MIME_TYPES: [Mime; 2] = [mime::IMAGE_JPEG, mime::IMAGE_PNG];
 
 #[tokio::main]
 async fn main() -> Result<()> {
@@ -32,19 +32,7 @@ async fn main() -> Result<()> {
             let timeline = tweet::user_timeline(user_id, opts.with_replies, opts.with_rts, &token)
                 .with_page_size(opts.max_amount);
             let (_, feed) = timeline.start().await?;
-            let filter = |url: &Url| {
-                return if let Some(segment) = url.path().split('/').last() {
-                    let guess = mime_guess::from_path(segment);
-                    guess
-                        .first()
-                        .filter(|mime| ACCEPTED_MIME_TYPES.contains(mime))
-                        .is_some()
-                } else {
-                    false
-                };
-            };
-            print_embedded_urls(feed.iter(), filter);
-            print_media_urls(feed.iter());
+            images::invoke(feed);
         }
         Commands::Links(opts) => {
             let user_id: UserID = opts.username.into();
@@ -100,19 +88,6 @@ fn print_video_urls(iterator: Iter<'_, tweet::Tweet>) {
         .filter(|variants| !variants.is_empty())
         .map(find_largest_video)
         .for_each(|x| println!("{}", x.url));
-}
-
-fn print_media_urls(iterator: Iter<'_, tweet::Tweet>) {
-    let mut urls = iterator
-        .filter_map(|status| status.extended_entities.as_ref())
-        .flat_map(|entities| &entities.media)
-        .map(|x| &x.media_url_https)
-        .filter(|x| !x.contains("thumb"))
-        .collect::<Vec<&String>>();
-    urls.dedup();
-    for url in urls {
-        println!("{url}:orig");
-    }
 }
 
 fn print_embedded_urls<F>(iterator: Iter<'_, tweet::Tweet>, filter: F)
