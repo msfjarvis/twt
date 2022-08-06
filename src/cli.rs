@@ -1,4 +1,13 @@
 use clap::{AppSettings, Args, Parser, Subcommand};
+use egg_mode::{
+    tweet::{self, Timeline},
+    user::UserID,
+    Token,
+};
+
+pub trait TimelineCreator {
+    fn create_timeline(&self, token: Token) -> Timeline;
+}
 
 #[derive(Parser)]
 #[clap(author, version, about)]
@@ -39,6 +48,15 @@ pub struct Images {
     pub with_replies: bool,
 }
 
+impl TimelineCreator for Images {
+    fn create_timeline(&self, token: Token) -> Timeline {
+        let user_id: UserID = self.username.clone().into();
+
+        tweet::user_timeline(user_id, self.with_replies, self.with_rts, &token)
+            .with_page_size(self.max_amount)
+    }
+}
+
 #[derive(Debug, Args)]
 pub struct Links {
     /// The Twitter username of the account to fetch links from.
@@ -62,6 +80,15 @@ pub struct Links {
     pub with_replies: bool,
 }
 
+impl TimelineCreator for Links {
+    fn create_timeline(&self, token: Token) -> Timeline {
+        let user_id: UserID = self.username.clone().into();
+
+        tweet::user_timeline(user_id, self.with_replies, self.with_rts, &token)
+            .with_page_size(self.max_amount)
+    }
+}
+
 #[derive(Debug, Args)]
 pub struct Videos {
     /// The Twitter username of the account to fetch links from.
@@ -83,4 +110,13 @@ pub struct Videos {
     /// Include replies.
     #[clap(long, default_value_t = false, value_parser = clap::value_parser!(bool))]
     pub with_replies: bool,
+}
+
+impl TimelineCreator for Videos {
+    fn create_timeline(&self, token: Token) -> Timeline {
+        let user_id: UserID = self.username.clone().into();
+
+        tweet::user_timeline(user_id, self.with_replies, self.with_rts, &token)
+            .with_page_size(self.max_amount)
+    }
 }

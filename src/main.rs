@@ -1,16 +1,12 @@
 mod cli;
 mod cmds;
 
-use crate::cli::{CliOptions, Commands};
+use crate::cli::{CliOptions, Commands, TimelineCreator};
 use crate::cmds::{images, links, videos};
 use clap::Parser;
 use color_eyre::Result;
-use egg_mode::tweet;
-use egg_mode::user::UserID;
 use egg_mode::KeyPair;
 use egg_mode::Token::Access;
-use std::slice::Iter;
-use url::{Host, Url};
 
 const CONSUMER_KEY: &str = std::env!("CONSUMER_KEY");
 const CONSUMER_KEY_SECRET: &str = std::env!("CONSUMER_KEY_SECRET");
@@ -27,26 +23,18 @@ async fn main() -> Result<()> {
 
     match options.command {
         Commands::Images(opts) => {
-            let user_id: UserID = opts.username.into();
-
-            let timeline = tweet::user_timeline(user_id, opts.with_replies, opts.with_rts, &token)
-                .with_page_size(opts.max_amount);
+            let timeline = opts.create_timeline(token);
             let (_, feed) = timeline.start().await?;
             images::invoke(feed);
         }
         Commands::Links(opts) => {
-            let user_id: UserID = opts.username.into();
-
-            let timeline = tweet::user_timeline(user_id, opts.with_replies, opts.with_rts, &token)
-                .with_page_size(opts.max_amount);
+            let host = opts.host.clone();
+            let timeline = opts.create_timeline(token);
             let (_, feed) = timeline.start().await?;
-            links::invoke(feed, opts.host);
+            links::invoke(feed, &host);
         }
         Commands::Videos(opts) => {
-            let user_id: UserID = opts.username.into();
-
-            let timeline = tweet::user_timeline(user_id, opts.with_replies, opts.with_rts, &token)
-                .with_page_size(opts.max_amount);
+            let timeline = opts.create_timeline(token);
             let (_, feed) = timeline.start().await?;
             videos::invoke(feed);
         }
