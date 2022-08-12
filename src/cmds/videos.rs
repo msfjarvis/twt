@@ -1,7 +1,7 @@
 use egg_mode::{entities::VideoVariant, tweet::Tweet, Response};
 use std::slice::Iter;
 
-pub fn invoke(feed: Response<Vec<Tweet>>) {
+pub fn invoke(feed: &Response<Vec<Tweet>>) {
     print_video_urls(feed.iter());
 }
 

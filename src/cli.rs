@@ -13,7 +13,7 @@ pub trait TimelineCreator {
 #[clap(author, version, about)]
 #[clap(global_setting(AppSettings::DeriveDisplayOrder))]
 /// Fetches the last tweets of a given account, then prints original quality URLs for all image tweets.
-pub struct CliOptions {
+pub struct Opts {
     #[clap(subcommand)]
     pub command: Commands,
 }

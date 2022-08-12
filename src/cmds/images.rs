@@ -6,7 +6,7 @@ use url::Url;
 
 const ACCEPTED_MIME_TYPES: [Mime; 2] = [mime::IMAGE_JPEG, mime::IMAGE_PNG];
 
-pub fn invoke(feed: Response<Vec<Tweet>>) {
+pub fn invoke(feed: &Response<Vec<Tweet>>) {
     let filter = |url: &Url| {
         return if let Some(segment) = url.path().split('/').last() {
             let guess = mime_guess::from_path(segment);
