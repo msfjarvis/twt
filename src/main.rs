@@ -23,18 +23,18 @@ async fn main() -> Result<()> {
 
     match options.command {
         Commands::Images(opts) => {
-            let timeline = opts.create_timeline(token);
+            let timeline = opts.timeline(token);
             let (_, feed) = timeline.start().await?;
             images::invoke(&feed);
         }
         Commands::Links(opts) => {
             let host = opts.host.clone();
-            let timeline = opts.create_timeline(token);
+            let timeline = opts.timeline(token);
             let (_, feed) = timeline.start().await?;
             links::invoke(&feed, &host);
         }
         Commands::Videos(opts) => {
-            let timeline = opts.create_timeline(token);
+            let timeline = opts.timeline(token);
             let (_, feed) = timeline.start().await?;
             videos::invoke(&feed);
         }

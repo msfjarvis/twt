@@ -6,7 +6,14 @@ use egg_mode::{
 };
 
 pub trait TimelineCreator {
-    fn create_timeline(&self, token: Token) -> Timeline;
+    fn timeline(&self, token: Token) -> Timeline;
+
+    fn create_timeline(&self, opts: &CommonCliOpts, token: Token) -> Timeline {
+        let user_id: UserID = opts.username.clone().into();
+
+        tweet::user_timeline(user_id, opts.with_replies, opts.with_rts, &token)
+            .with_page_size(opts.max_amount)
+    }
 }
 
 #[derive(Parser)]
@@ -29,7 +36,7 @@ pub enum Commands {
 }
 
 #[derive(Debug, Args)]
-struct CommonCliOpts {
+pub struct CommonCliOpts {
     /// The Twitter username of the account to fetch images from.
     #[clap(long)]
     pub username: String,
@@ -59,11 +66,8 @@ pub struct Images {
 }
 
 impl TimelineCreator for Images {
-    fn create_timeline(&self, token: Token) -> Timeline {
-        let user_id: UserID = self.opts.username.clone().into();
-
-        tweet::user_timeline(user_id, self.opts.with_replies, self.opts.with_rts, &token)
-            .with_page_size(self.opts.max_amount)
+    fn timeline(&self, token: Token) -> Timeline {
+        self.create_timeline(&self.opts, token)
     }
 }
 
@@ -78,11 +82,8 @@ pub struct Links {
 }
 
 impl TimelineCreator for Links {
-    fn create_timeline(&self, token: Token) -> Timeline {
-        let user_id: UserID = self.opts.username.clone().into();
-
-        tweet::user_timeline(user_id, self.opts.with_replies, self.opts.with_rts, &token)
-            .with_page_size(self.opts.max_amount)
+    fn timeline(&self, token: Token) -> Timeline {
+        self.create_timeline(&self.opts, token)
     }
 }
 
@@ -97,10 +98,7 @@ pub struct Videos {
 }
 
 impl TimelineCreator for Videos {
-    fn create_timeline(&self, token: Token) -> Timeline {
-        let user_id: UserID = self.opts.username.clone().into();
-
-        tweet::user_timeline(user_id, self.opts.with_replies, self.opts.with_rts, &token)
-            .with_page_size(self.opts.max_amount)
+    fn timeline(&self, token: Token) -> Timeline {
+        self.create_timeline(&self.opts, token)
     }
 }
