@@ -59,10 +59,6 @@ pub struct CommonCliOpts {
 pub struct Images {
     #[clap(flatten)]
     opts: CommonCliOpts,
-
-    /// Include replies.
-    #[clap(long, default_value_t = false, value_parser = clap::value_parser!(bool))]
-    pub with_replies: bool,
 }
 
 impl TimelineCreator for Images {
@@ -72,6 +68,7 @@ impl TimelineCreator for Images {
 }
 
 #[derive(Debug, Args)]
+/// Fetch links from the user's tweets, filtered based on the given host.
 pub struct Links {
     #[clap(flatten)]
     opts: CommonCliOpts,
@@ -88,13 +85,10 @@ impl TimelineCreator for Links {
 }
 
 #[derive(Debug, Args)]
+/// Fetch high quality versions of videos embedded in the user's tweets.
 pub struct Videos {
     #[clap(flatten)]
     opts: CommonCliOpts,
-
-    /// The host name to filter links on.
-    #[clap(long, default_value = "imgur.com")]
-    pub host: String,
 }
 
 impl TimelineCreator for Videos {
