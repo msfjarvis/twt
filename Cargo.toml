@@ -18,5 +18,5 @@ color-eyre = { version = "0.6.2", default-features = false }
 egg-mode = { version = "0.16.0", features = ["rustls_webpki"], default-features = false }
 mime = "0.3"
 mime_guess = "2.0.4"
-tokio = { version = "1.21.0", features = ["rt-multi-thread", "macros"] }
+tokio = { version = "1.21.1", features = ["rt-multi-thread", "macros"] }
 url = "2.3.1"
