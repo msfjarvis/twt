@@ -72,9 +72,9 @@ pub struct Links {
     #[command(flatten)]
     opts: CommonCliOpts,
 
-    /// The host name to filter links on.
-    #[arg(long, default_value = "imgur.com")]
-    pub host: String,
+    /// The host name to filter links on. Prints all links if no value is passed.
+    #[arg(long)]
+    pub host: Option<String>,
 }
 
 impl TimelineCreator for Links {
