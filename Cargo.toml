@@ -1,6 +1,6 @@
 [package]
 name = "twt"
-version = "0.6.1"
+version = "0.7.0"
 edition = "2021"
 authors = ["Harsh Shandilya <me@msfjarvis.dev>"]
 license = "MIT/Apache-2.0"
