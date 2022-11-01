@@ -1,24 +1,24 @@
 mod cli;
 mod cmds;
+mod config;
 
 use crate::cli::{Commands, Opts, TimelineCreator};
 use crate::cmds::{images, links, videos};
+use crate::config::Credentials;
 use clap::Parser;
 use color_eyre::Result;
 use egg_mode::KeyPair;
 use egg_mode::Token::Access;
 
-const CONSUMER_KEY: &str = std::env!("CONSUMER_KEY");
-const CONSUMER_KEY_SECRET: &str = std::env!("CONSUMER_KEY_SECRET");
-const ACCESS_TOKEN: &str = std::env!("ACCESS_TOKEN");
-const ACCESS_TOKEN_SECRET: &str = std::env!("ACCESS_TOKEN_SECRET");
-
 #[tokio::main]
 async fn main() -> Result<()> {
+    let config_path = crate::config::get_path()?;
+    let config_str = std::fs::read_to_string(config_path.as_path())?;
+    let credentials: Credentials = toml::from_str(&config_str)?;
     let options = Opts::parse();
 
-    let consumer = KeyPair::new(CONSUMER_KEY, CONSUMER_KEY_SECRET);
-    let access = KeyPair::new(ACCESS_TOKEN, ACCESS_TOKEN_SECRET);
+    let consumer = KeyPair::new(credentials.consumer_key, credentials.consumer_key_secret);
+    let access = KeyPair::new(credentials.access_token, credentials.access_token_secret);
     let token = Access { consumer, access };
 
     match options.command {
