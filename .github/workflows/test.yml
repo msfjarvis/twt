@@ -51,7 +51,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@7dd9e2a3dc350cf687eb1b2a4fadfee8c8e49675 # v3
+      uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3
 
     - uses: rui314/setup-mold@b2554ccb6486461b7022f149ac59c96757fd8dee # v1
       if: runner.os == 'Linux'
