@@ -19,7 +19,7 @@ dirs = "4.0.0"
 egg-mode = { version = "0.16.0", features = ["rustls_webpki"], default-features = false }
 mime = "0.3"
 mime_guess = "2.0.4"
-serde = { version = "1.0.151", features = ["serde_derive"] }
+serde = { version = "1.0.152", features = ["serde_derive"] }
 tokio = { version = "1.23.0", features = ["rt-multi-thread", "macros"] }
 toml = "0.5.10"
 url = "2.3.1"
