@@ -1,4 +1,4 @@
-# twt [![Check Rust code](https://github.com/msfjarvis/twitter-images/actions/workflows/test.yml/badge.svg)](https://github.com/msfjarvis/twitter-images/actions/workflows/test.yml)
+# twt [![Check Rust code](https://github.com/msfjarvis/twitter-images/actions/workflows/test.yml/badge.svg)](https://github.com/msfjarvis/twitter-images/actions/workflows/test.yml) [![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
 
 CLI tool to extract metadata from tweets
 
