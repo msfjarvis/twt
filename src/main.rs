@@ -25,18 +25,21 @@ async fn main() -> Result<()> {
         Commands::Images(opts) => {
             let timeline = opts.timeline(token);
             let (_, feed) = timeline.start().await?;
-            images::invoke(&feed);
+            let feed = feed.iter();
+            images::invoke(feed);
         }
         Commands::Links(opts) => {
             let host = opts.host.clone();
             let timeline = opts.timeline(token);
             let (_, feed) = timeline.start().await?;
-            links::invoke(&feed, &host);
+            let feed = feed.iter();
+            links::invoke(feed, &host);
         }
         Commands::Videos(opts) => {
             let timeline = opts.timeline(token);
             let (_, feed) = timeline.start().await?;
-            videos::invoke(&feed);
+            let feed = feed.iter();
+            videos::invoke(feed);
         }
     }
 

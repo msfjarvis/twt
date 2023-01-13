@@ -1,12 +1,12 @@
 use super::print_embedded_urls;
-use egg_mode::{tweet::Tweet, Response};
+use egg_mode::tweet::Tweet;
 use mime::Mime;
 use std::slice::Iter;
 use url::Url;
 
 const ACCEPTED_MIME_TYPES: [Mime; 2] = [mime::IMAGE_JPEG, mime::IMAGE_PNG];
 
-pub fn invoke(feed: &Response<Vec<Tweet>>) {
+pub fn invoke(feed: Iter<Tweet>) {
     let filter = |url: &Url| {
         return if let Some(segment) = url.path().split('/').last() {
             let guess = mime_guess::from_path(segment);
@@ -18,8 +18,8 @@ pub fn invoke(feed: &Response<Vec<Tweet>>) {
             false
         };
     };
-    print_embedded_urls(feed.iter(), filter);
-    print_media_urls(feed.iter());
+    print_embedded_urls(feed.clone(), filter);
+    print_media_urls(feed.clone());
 }
 
 fn print_media_urls(iterator: Iter<'_, Tweet>) {

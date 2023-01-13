@@ -1,8 +1,8 @@
-use egg_mode::{entities::VideoVariant, tweet::Tweet, Response};
+use egg_mode::{entities::VideoVariant, tweet::Tweet};
 use std::slice::Iter;
 
-pub fn invoke(feed: &Response<Vec<Tweet>>) {
-    print_video_urls(feed.iter());
+pub fn invoke(feed: Iter<Tweet>) {
+    print_video_urls(feed);
 }
 
 // It'd be significantly easier to just use [Vec::sort_by] but lol, lmao.
