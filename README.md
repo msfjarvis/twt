@@ -2,24 +2,35 @@
 
 CLI tool to extract metadata from tweets
 
-## Usage
+## Install
 
-There are unlikely to ever be published binaries for this, so this requires a Rust development environment set up locally.
+### Install prebuilt binaries via shell script
 
 ```shell
-git clone https://github.com/msfjarvis/twitter-images.git
-cd twitter-images
-cargo build --release
+# WARNING: this installer is experimental
+curl --proto '=https' --tlsv1.2 -L -sSf https://github.com/msfjarvis/twt/releases/download/latest/installer.sh | sh
 ```
 
-The tool is built to avoid interactive login and relies on the presence of a bunch of environment variables at build-time that require a Twitter developer account and a project created on the account to obtain.
+### Install prebuilt binaries via powershell script
 
-- `CONSUMER_KEY` - The consumer API key for the project.
-- `CONSUMER_KEY_SECRET` - The consumer secret for the project.
-- `ACCESS_TOKEN` - Authentication access token for your user, for the project.
-- `ACCESS_TOKEN_SECRET` - Access secret for your user.
+```shell
+# WARNING: this installer is experimental
+irm 'https://github.com/msfjarvis/twt/releases/download/latest/installer.ps1' | iex
+```
 
-## Examples
+## Setup
+
+This tool requires Twitter consumer keys to function. Twitter is moving to [disallow free usage of the API](https://fxtwitter.com/twitterdev/status/1621026986784337922) which is some hot bullshit, so you can pick up one of their own keys from [here](https://gist.github.com/shobotch/5160017) as a sincere fuck you to the new czar.
+
+`twt` picks up keys from `$CONFIG_DIR/twt/config.toml` (see [here](https://docs.rs/dirs/latest/dirs/fn.config_dir.html) for your platform's interpretation of `$CONFIG_DIR`)
+
+```toml
+# config.toml
+consumer_key = "totally_real_key"
+consumer_key_secret = "h4xx0r"
+```
+
+## Usage
 
 - **Get image links**
 
