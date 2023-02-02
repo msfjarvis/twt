@@ -8,7 +8,6 @@ use crate::config::Credentials;
 use clap::Parser;
 use color_eyre::Result;
 use egg_mode::KeyPair;
-use egg_mode::Token::Access;
 
 #[tokio::main]
 async fn main() -> Result<()> {
@@ -17,9 +16,8 @@ async fn main() -> Result<()> {
     let credentials: Credentials = toml::from_str(&config_str)?;
     let options = Opts::parse();
 
-    let consumer = KeyPair::new(credentials.consumer_key, credentials.consumer_key_secret);
-    let access = KeyPair::new(credentials.access_token, credentials.access_token_secret);
-    let token = Access { consumer, access };
+    let con_token = KeyPair::new(credentials.consumer_key, credentials.consumer_key_secret);
+    let token = egg_mode::auth::bearer_token(&con_token).await?;
 
     match options.command {
         Commands::Images(opts) => {

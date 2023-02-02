@@ -7,8 +7,6 @@ use serde::Deserialize;
 pub struct Credentials {
     pub consumer_key: String,
     pub consumer_key_secret: String,
-    pub access_token: String,
-    pub access_token_secret: String,
 }
 
 pub fn get_path() -> Result<PathBuf> {
