@@ -8,14 +8,14 @@ CLI tool to extract metadata from tweets
 
 ```shell
 # WARNING: this installer is experimental
-curl --proto '=https' --tlsv1.2 -L -sSf https://github.com/msfjarvis/twt/releases/download/latest/installer.sh | sh
+curl --proto '=https' --tlsv1.2 -L -sSf https://github.com/msfjarvis/twt/releases/latest/download/installer.sh | sh
 ```
 
 ### Install prebuilt binaries via powershell script
 
 ```shell
 # WARNING: this installer is experimental
-irm 'https://github.com/msfjarvis/twt/releases/download/latest/installer.ps1' | iex
+irm 'https://github.com/msfjarvis/twt/releases/latest/download/installer.ps1' | iex
 ```
 
 ## Setup
