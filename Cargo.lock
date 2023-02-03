@@ -305,9 +305,9 @@ dependencies = [
 
 [[package]]
 name = "egg-mode"
-version = "0.16.0"
+version = "0.16.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bb96b3df2a1dd9fe043e58eed7ba1c835a23561e777e243e8cc08aa4178aec79"
+checksum = "1ba67cb7d82f4e358bf5b67099d949e21f2419bde17b892ce09f0950e5e97be3"
 dependencies = [
  "base64",
  "chrono",

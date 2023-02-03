@@ -16,7 +16,7 @@ include = ["src/main.rs", "LICENSE-*", "README.md"]
 clap = { version = "4.1.4", features = [ "color", "deprecated", "derive", "env" ] }
 color-eyre = { version = "0.6.2", default-features = false }
 dirs = "4.0.0"
-egg-mode = { version = "0.16.0", features = ["rustls_webpki"], default-features = false }
+egg-mode = { version = "0.16.1", features = ["rustls_webpki"], default-features = false }
 mime = "0.3"
 mime_guess = "2.0.4"
 serde = { version = "1.0.152", features = ["serde_derive"] }
