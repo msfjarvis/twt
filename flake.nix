@@ -74,9 +74,7 @@
       };
     in {
       checks = {
-        # TODO: Switch to cargo-audit and re-enable this
-        # twt-audit
-        inherit twt twt-clippy twt-fmt twt-nextest;
+        inherit twt twt-audit twt-clippy twt-fmt twt-nextest;
       };
 
       packages.default = twt;
