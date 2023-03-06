@@ -1,5 +1,6 @@
 pub mod images;
 pub mod links;
+#[cfg(feature = "videos")]
 pub mod videos;
 
 use egg_mode::tweet::Tweet;

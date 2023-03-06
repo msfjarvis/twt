@@ -30,6 +30,7 @@ pub enum Commands {
     Images(Images),
     #[command(arg_required_else_help = true)]
     Links(Links),
+    #[cfg(feature = "videos")]
     #[command(arg_required_else_help = true)]
     Videos(Videos),
 }
@@ -83,6 +84,7 @@ impl TimelineCreator for Links {
     }
 }
 
+#[cfg(feature = "videos")]
 #[derive(Debug, Args)]
 /// Fetch high quality versions of videos embedded in the user's tweets.
 pub struct Videos {
@@ -90,6 +92,7 @@ pub struct Videos {
     opts: CommonCliOpts,
 }
 
+#[cfg(feature = "videos")]
 impl TimelineCreator for Videos {
     fn timeline(&self, token: Token) -> Timeline {
         self.create_timeline(&self.opts, token)

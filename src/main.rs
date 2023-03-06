@@ -3,7 +3,9 @@ mod cmds;
 mod config;
 
 use crate::cli::{Commands, Opts, TimelineCreator};
-use crate::cmds::{images, links, videos};
+#[cfg(feature = "videos")]
+use crate::cmds::videos;
+use crate::cmds::{images, links};
 use crate::config::Credentials;
 use clap::Parser;
 use color_eyre::Result;
@@ -33,6 +35,7 @@ async fn main() -> Result<()> {
             let feed = feed.iter();
             links::invoke(feed, &host);
         }
+        #[cfg(feature = "videos")]
         Commands::Videos(opts) => {
             let timeline = opts.timeline(token);
             let (_, feed) = timeline.start().await?;
