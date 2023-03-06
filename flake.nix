@@ -53,7 +53,7 @@
       rustStable =
         pkgs.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
       craneLib = (crane.mkLib pkgs).overrideToolchain rustStable;
-      src = ./.;
+      src = craneLib.cleanCargoSource ./.;
       cargoArtifacts = craneLib.buildDepsOnly {inherit src buildInputs;};
       buildInputs = [];
 
