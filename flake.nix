@@ -53,25 +53,28 @@
       rustStable =
         pkgs.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
       craneLib = (crane.mkLib pkgs).overrideToolchain rustStable;
-      src = craneLib.cleanCargoSource ./.;
-      cargoArtifacts = craneLib.buildDepsOnly {inherit src buildInputs;};
-      buildInputs = [];
-
-      twt = craneLib.buildPackage {
-        inherit src;
-        doCheck = false;
-      };
-      twt-clippy = craneLib.cargoClippy {
-        inherit cargoArtifacts src buildInputs;
+      commonArgs = {
+        src = craneLib.cleanCargoSource ./.;
+        buildInputs = [];
+        nativeBuildInputs = [];
         cargoClippyExtraArgs = "--all-targets -- --deny warnings";
       };
-      twt-fmt = craneLib.cargoFmt {inherit src;};
-      twt-audit = craneLib.cargoAudit {inherit src advisory-db;};
-      twt-nextest = craneLib.cargoNextest {
-        inherit cargoArtifacts src buildInputs;
-        partitions = 1;
-        partitionType = "count";
-      };
+      cargoArtifacts = craneLib.buildDepsOnly (commonArgs // {doCheck = false;});
+
+      twt = craneLib.buildPackage (commonArgs // {doCheck = false;});
+      twt-clippy = craneLib.cargoClippy (commonArgs
+        // {
+          inherit cargoArtifacts;
+        });
+      twt-fmt = craneLib.cargoFmt (commonArgs // {});
+      twt-audit = craneLib.cargoAudit (commonArgs // {inherit advisory-db;});
+      twt-nextest = craneLib.cargoNextest (commonArgs
+        // {
+          inherit cargoArtifacts;
+          src = ./.;
+          partitions = 1;
+          partitionType = "count";
+        });
     in {
       checks = {
         inherit twt twt-audit twt-clippy twt-fmt twt-nextest;
@@ -89,6 +92,8 @@
           cargo-release
           rustStable
         ];
+
+        CARGO_REGISTRIES_CRATES_IO_PROTOCOL = "sparse";
       };
     });
 }
