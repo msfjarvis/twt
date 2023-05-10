@@ -20,7 +20,7 @@ egg-mode = { version = "0.16.1", features = ["rustls_webpki"], default-features 
 mime = "0.3"
 mime_guess = "2.0.4"
 serde = { version = "1.0.162", features = ["serde_derive"] }
-tokio = { version = "1.28.0", features = ["rt-multi-thread", "macros"] }
+tokio = { version = "1.28.1", features = ["rt-multi-thread", "macros"] }
 toml = "0.7.3"
 url = "2.3.1"
 
