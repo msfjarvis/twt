@@ -1,0 +1,52 @@
+<html class="dark" id="oranda" lang="en"><head><title>twt</title><meta content="https://github.com/msfjarvis/twt" property="og:url"/><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="Tools for extracting metadata from tweets" name="description"/><meta content="Tools for extracting metadata from tweets" name="description"/><meta content="Tools for extracting metadata from tweets" property="og:description"/><meta content="website" property="og:type"/><meta content="twt" property="og:title"/><meta content="interest-cohort=()" http_equiv="Permissions-Policy"/><link href="/twt/oranda.css" rel="stylesheet"/></head><body><div class="container"><div class="repo_banner"><a href="https://github.com/msfjarvis/twt"><div class="github-icon" aria-hidden="true"></div>Check out our GitHub</a></div><main><header><h1 class="title">twt</h1><nav class="nav"><ul><li><a href="/twt">Home</a></li><li><a href="/twt/artifacts.html">Install</a></li></ul></nav></header><div><div><h4 class="text-center">Install with crates.io</h4><pre style="background-color:#263238;">
+<span style="color:#82aaff;">cargo install twt</span><span style="color:#89ddff;"> --</span><span style="color:#f78c6c;">locked</span><span style="color:#89ddff;"> --</span><span style="color:#f78c6c;">profile</span><span style="color:#89ddff;">=</span><span style="color:#82aaff;">dist</span></pre>
+<div><a class="download-all" href="/artifacts.html">View all downloads</a></div></div><h1>twt <a href="http://unmaintained.tech/" rel="noopener noreferrer"><img src="http://unmaintained.tech/badge.svg" alt="No Maintenance Intended"></a> <a href="https://garnix.io" rel="noopener noreferrer"><img src="https://img.shields.io/static/v1?label=Built%20with&amp;message=Garnix&amp;color=blue&amp;style=flat&amp;logo=nixos&amp;link=https://garnix.io&amp;labelColor=111212" alt="Built with Garnix"></a></h1>
+<p>CLI tool to extract metadata from tweets</p>
+<h2>Install</h2>
+<h3>Install prebuilt binaries via shell script</h3>
+<pre style="background-color:#263238;"><span style="color:#eeffff;"># WARNING: this installer is experimental
+</span><span style="color:#eeffff;">curl --proto '=https' --tlsv1.2 -L -sSf https://github.com/msfjarvis/twt/releases/latest/download/installer.sh | sh
+</span></pre>
+
+<h3>Install prebuilt binaries via powershell script</h3>
+<pre style="background-color:#263238;"><span style="color:#eeffff;"># WARNING: this installer is experimental
+</span><span style="color:#eeffff;">irm 'https://github.com/msfjarvis/twt/releases/latest/download/installer.ps1' | iex
+</span></pre>
+
+<h2>Setup</h2>
+<p>This tool requires Twitter consumer keys to function. Twitter is moving to <a href="https://fxtwitter.com/twitterdev/status/1621026986784337922" rel="noopener noreferrer">disallow free usage of the API</a> which is some hot bullshit, so you can pick up one of their own keys from <a href="https://gist.github.com/shobotch/5160017" rel="noopener noreferrer">here</a> as a sincere fuck you to the new czar.</p>
+<p><code>twt</code> picks up keys from <code>$CONFIG_DIR/twt/config.toml</code> (see <a href="https://docs.rs/dirs/latest/dirs/fn.config_dir.html" rel="noopener noreferrer">here</a> for your platform's interpretation of <code>$CONFIG_DIR</code>)</p>
+<pre style="background-color:#263238;"><span style="color:#eeffff;"># config.toml
+</span><span style="color:#eeffff;">consumer_key = "totally_real_key"
+</span><span style="color:#eeffff;">consumer_key_secret = "h4xx0r"
+</span></pre>
+
+<h2>Usage</h2>
+<ul>
+<li>
+<p><strong>Get image links</strong></p>
+<pre style="background-color:#263238;"><span style="color:#82aaff;">twt images</span><span style="color:#89ddff;"> --</span><span style="color:#f78c6c;">username</span><span style="color:#82aaff;"> archillect
+</span></pre>
+
+</li>
+<li>
+<p><strong>Get video links</strong></p>
+<pre style="background-color:#263238;"><span style="color:#82aaff;">twt videos</span><span style="color:#89ddff;"> --</span><span style="color:#f78c6c;">username</span><span style="color:#82aaff;"> imgur
+</span></pre>
+
+</li>
+<li>
+<p><strong>Set the maximum tweets to check</strong></p>
+<pre style="background-color:#263238;"><span style="color:#82aaff;">twt images</span><span style="color:#89ddff;"> --</span><span style="color:#f78c6c;">username</span><span style="color:#82aaff;"> archillect</span><span style="color:#89ddff;"> --</span><span style="color:#f78c6c;">max-amount</span><span style="color:#82aaff;"> 512
+</span></pre>
+
+</li>
+<li>
+<p><strong>Get all links</strong></p>
+<pre style="background-color:#263238;"><span style="color:#82aaff;">twt links</span><span style="color:#89ddff;"> --</span><span style="color:#f78c6c;">username</span><span style="color:#82aaff;"> AITA_online</span><span style="color:#89ddff;"> --</span><span style="color:#f78c6c;">host</span><span style="color:#82aaff;"> bit.ly
+</span></pre>
+
+</li>
+</ul>
+<p>For more help run: <code>twt -h</code>.</p>
+</div></main><footer class="footer"><a href="https://github.com/msfjarvis/twt"><div class="github-icon" aria-hidden="true"></div></a><span>twt, MIT/Apache-2.0 license.</span></footer></div><div><script src="/twt/artifacts.js"></script></div></body></html>
