@@ -2,10 +2,10 @@
   "dist_dir": "./docs",
   "path_prefix": "twt",
   "artifacts": {
-    "cargo_dist": false,
     "package_managers": {
       "crates.io": "cargo install twt --locked --profile=dist",
-      "binstall": "cargo binstall twt"
+      "binstall": "cargo binstall twt",
+      "nix flake": "nix profile install github:msfjarvis/twt"
     }
   }
 }
