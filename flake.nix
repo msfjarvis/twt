@@ -4,6 +4,14 @@
   inputs = {
     nixpkgs = {url = "github:NixOS/nixpkgs/nixpkgs-unstable";};
 
+    custom-nixpkgs = {
+      url = "github:msfjarvis/custom-nixpkgs";
+      inputs = {
+        fenix.follows = "fenix";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
+
     fenix = {
       url = "github:nix-community/fenix";
       inputs = {
@@ -36,6 +44,7 @@
   outputs = {
     self,
     nixpkgs,
+    custom-nixpkgs,
     fenix,
     crane,
     flake-utils,
@@ -88,6 +97,7 @@
           cargo-nextest
           cargo-release
           rustStable
+          custom-nixpkgs.packages.${system}.oranda
         ];
 
         CARGO_REGISTRIES_CRATES_IO_PROTOCOL = "sparse";
