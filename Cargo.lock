@@ -1316,6 +1316,7 @@ dependencies = [
  "mime",
  "mime_guess",
  "serde",
+ "serde_derive",
  "tokio",
  "toml",
  "url",

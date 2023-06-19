@@ -1,7 +1,7 @@
 use std::path::PathBuf;
 
 use color_eyre::{eyre::eyre, Result};
-use serde::Deserialize;
+use serde_derive::Deserialize;
 
 #[derive(Deserialize)]
 pub struct Credentials {
