@@ -45,7 +45,7 @@
     flake-utils.lib.eachDefaultSystem (system: let
       pkgs = import nixpkgs {
         inherit system;
-        overlays = [devshell.overlays.default];
+        overlays = [custom-nixpkgs.overlays.default devshell.overlays.default];
       };
 
       rustStable = (import fenix {inherit pkgs;}).fromToolchainFile {
@@ -98,7 +98,7 @@
           cargo-nextest
           cargo-release
           rustStable
-          custom-nixpkgs.packages.${system}.oranda
+          oranda
         ];
       };
     });
