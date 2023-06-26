@@ -4,23 +4,11 @@ CLI tool to extract metadata from tweets
 
 ## Install
 
-### Install prebuilt binaries via shell script
-
-```shell
-# WARNING: this installer is experimental
-curl --proto '=https' --tlsv1.2 -L -sSf https://github.com/msfjarvis/twt/releases/latest/download/installer.sh | sh
-```
-
-### Install prebuilt binaries via powershell script
-
-```shell
-# WARNING: this installer is experimental
-irm 'https://github.com/msfjarvis/twt/releases/latest/download/installer.ps1' | iex
-```
+Check out the [website](https://msfjarvis.github.io/twt/)
 
 ## Setup
 
-This tool requires Twitter consumer keys to function. Twitter is moving to [disallow free usage of the API](https://fxtwitter.com/twitterdev/status/1621026986784337922) which is some hot bullshit, so you can pick up one of their own keys from [here](https://gist.github.com/shobotch/5160017) as a sincere fuck you to the new czar.
+This tool requires Twitter consumer keys to function. Twitter is moving to [disallow free usage of the API](https://fxtwitter.com/twitterdev/status/1621026986784337922), so you will have to steal their own keys to work around this.
 
 `twt` picks up keys from `$CONFIG_DIR/twt/config.toml` (see [here](https://docs.rs/dirs/latest/dirs/fn.config_dir.html) for your platform's interpretation of `$CONFIG_DIR`)
 
