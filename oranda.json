@@ -7,9 +7,7 @@
     "artifacts": {
       "cargo_dist": true,
       "package_managers": {
-        "crates.io": "cargo install twt --locked --profile=dist",
-        "binstall": "cargo binstall twt",
-        "nix flake": "nix profile install github:msfjarvis/twt"
+        "nix flakes": "nix profile install github:msfjarvis/twt"
       }
     }
   }
