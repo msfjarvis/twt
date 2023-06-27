@@ -28,7 +28,7 @@ mime = "0.3"
 mime_guess = "2.0.4"
 serde = "1.0.164"
 serde_derive = "1.0.164"
-tokio = { version = "1.28.2", features = ["rt-multi-thread", "macros"] }
+tokio = { version = "1.29.0", features = ["rt-multi-thread", "macros"] }
 toml = "0.7.5"
 url = "2.4.0"
 
