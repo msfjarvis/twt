@@ -20,28 +20,28 @@ consumer_key_secret = "h4xx0r"
 
 ## Usage
 
-- **Get image links**
+### Get image links
 
-    ```sh
-    twt images --username archillect
-    ```
+```
+twt images --username archillect
+```
 
-- **Get video links**
+### Get video links
 
-    ```sh
-    twt videos --username imgur
-    ```
+```
+twt videos --username imgur
+```
 
-- **Set the maximum tweets to check**
+### Set the maximum tweets to check
 
-    ```sh
-    twt images --username archillect --max-amount 512
-    ```
+```
+twt images --username archillect --max-amount 512
+```
 
-- **Get all links**
+### Get all links
 
-    ```sh
-    twt links --username AITA_online --host bit.ly
-    ```
+```
+twt links --username AITA_online --host bit.ly
+```
 
 For more help run: `twt -h`.
