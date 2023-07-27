@@ -7,7 +7,9 @@
     "artifacts": {
       "cargo_dist": true,
       "package_managers": {
-        "nix flakes": "nix profile install github:msfjarvis/twt"
+        "preferred": {
+          "nix flakes": "nix profile install github:msfjarvis/twt"
+        }
       }
     }
   }
