@@ -10,7 +10,7 @@
 
 $repo = 'https://github.com/msfjarvis/twt'
 $app_name = 'twt'
-$package_version = 'v1.2.3'
+$package_version = 'v1.2.4'
 
 function Install-Binary($install_args) {
   $old_erroractionpreference = $ErrorActionPreference
