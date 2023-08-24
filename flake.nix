@@ -95,10 +95,11 @@
         ];
 
         packages = with pkgs; [
+          cargo-dist-unstable
           cargo-nextest
           cargo-release
-          rustStable
           oranda
+          rustStable
         ];
       };
     });
