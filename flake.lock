@@ -57,11 +57,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1692319777,
-        "narHash": "sha256-xYYRxsMgiw6bMBXeImHbwN7kj/liStSpDoKTiw/Ed24=",
+        "lastModified": 1692917810,
+        "narHash": "sha256-yphwiZk+F221jYQHPNUGAoy/MJI3usdgtzdVG+7oKFY=",
         "owner": "msfjarvis",
         "repo": "custom-nixpkgs",
-        "rev": "7f5998077786b9280cc07c36f6d90d0e2618b5ea",
+        "rev": "3b29b3378dc3f5abb36d670ca16aa566ea17a47d",
         "type": "github"
       },
       "original": {
@@ -199,13 +199,13 @@
     "rust-manifest": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-9OMI8u+0LF0qAKlC3X0kr79BO6LqJEP4+OwhQff23D4=",
+        "narHash": "sha256-emILH39kZmz9D2cquaobdM55EakoGkUxn1sY3r1iYNg=",
         "type": "file",
-        "url": "https://static.rust-lang.org/dist/2023-06-10/channel-rust-nightly.toml"
+        "url": "https://static.rust-lang.org/dist/2023-07-08/channel-rust-nightly.toml"
       },
       "original": {
         "type": "file",
-        "url": "https://static.rust-lang.org/dist/2023-06-10/channel-rust-nightly.toml"
+        "url": "https://static.rust-lang.org/dist/2023-07-08/channel-rust-nightly.toml"
       }
     },
     "rust-overlay": {
