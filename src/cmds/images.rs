@@ -6,6 +6,8 @@ use url::Url;
 
 const ACCEPTED_MIME_TYPES: [Mime; 2] = [mime::IMAGE_JPEG, mime::IMAGE_PNG];
 
+// `feed` is passed over into two separate methods which consume the value fully.
+#[allow(clippy::needless_pass_by_value)]
 pub fn invoke(feed: Iter<Tweet>) {
     let filter = |url: &Url| {
         return if let Some(segment) = url.path().split('/').last() {
