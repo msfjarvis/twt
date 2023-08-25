@@ -26,8 +26,8 @@ egg-mode = { version = "0.16.1", features = [
 ], default-features = false }
 mime = "0.3"
 mime_guess = "2.0.4"
-serde = "1.0.186"
-serde_derive = "1.0.186"
+serde = "1.0.187"
+serde_derive = "1.0.187"
 tokio = { version = "1.32.0", features = ["rt-multi-thread", "macros"] }
 toml = "0.7.6"
 url = "2.4.0"
