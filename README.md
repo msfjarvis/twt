@@ -1,4 +1,7 @@
-# twt [![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/) [![Built with Garnix](https://img.shields.io/endpoint?url=https%3A%2F%2Fgarnix.io%2Fapi%2Fbadges%2Fmsfjarvis%2Ftwt%3Fbranch%3Dmain)](https://garnix.io)
+> [!WARNING]  
+> Due to Twitter's complete decimation of its API, `twt` no longer works for most use cases and is thus not going to be maintained going forward.
+
+# twt [![Built with Garnix](https://img.shields.io/endpoint?url=https%3A%2F%2Fgarnix.io%2Fapi%2Fbadges%2Fmsfjarvis%2Ftwt%3Fbranch%3Dmain)](https://garnix.io)
 
 CLI tool to extract metadata from tweets
 
